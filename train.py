@@ -59,7 +59,7 @@ window.grid_columnconfigure(0, weight=1)
 
 
 
-message = tk.Label(window, text="Face-Recognition-Based-Attendance-Management-System" ,bg="Green"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'italic bold underline'))
+message = tk.Label(window, text="Facial Recognition-Based Attendance Management System" ,bg="slate blue"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'italic bold underline'))
 
 message.place(x=200, y=20)
 
@@ -170,7 +170,6 @@ def TrainImages():
 def getImagesAndLabels(path):
     #get the path of all the files in the folder
     imagePaths=[os.path.join(path,f) for f in os.listdir(path)]
-    #print(imagePaths)
 
     #create empth face list
     faces=[]
