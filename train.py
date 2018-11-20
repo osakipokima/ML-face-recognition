@@ -22,7 +22,7 @@ window.title("Face_Recogniser")
 dialog_title = 'QUIT'
 dialog_text = 'Are you sure?'
 
-window.configure(background='blue')
+window.configure(background='snow')
 
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
