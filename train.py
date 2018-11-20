@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun 17 2018
-
-@author: Ashish Kumar
+Team: Matrix:Reloaded
 """
 
 import tkinter as tk
@@ -34,6 +32,7 @@ window.configure(background='blue')
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
 
+<<<<<<< HEAD
 #path = "profile.jpg"
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -60,6 +59,9 @@ window.grid_columnconfigure(0, weight=1)
 
 
 message = tk.Label(window, text="Facial Recognition-Based Attendance Management System" ,bg="slate blue"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'italic bold underline'))
+=======
+message = tk.Label(window, text="Face-Recognition-Based-Attendance-Management-System" ,bg="Green"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'italic bold underline'))
+>>>>>>> dd6dd1b4feaa5da86afbbed919da4fdd145265aa
 
 message.place(x=200, y=20)
 
@@ -83,7 +85,6 @@ message.place(x=700, y=400)
 
 lbl3 = tk.Label(window, text="Attendance : ",width=20  ,fg="red"  ,bg="yellow"  ,height=2 ,font=('times', 15, ' bold  underline'))
 lbl3.place(x=400, y=650)
-
 
 message2 = tk.Label(window, text="" ,fg="red"   ,bg="yellow",activeforeground = "green",width=30  ,height=2  ,font=('times', 15, ' bold '))
 message2.place(x=700, y=650)
