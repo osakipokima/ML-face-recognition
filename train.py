@@ -32,7 +32,6 @@ window.configure(background='blue')
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
 
-<<<<<<< HEAD
 #path = "profile.jpg"
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -59,9 +58,6 @@ window.grid_columnconfigure(0, weight=1)
 
 
 message = tk.Label(window, text="Facial Recognition-Based Attendance Management System" ,bg="slate blue"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'italic bold underline'))
-=======
-message = tk.Label(window, text="Face-Recognition-Based-Attendance-Management-System" ,bg="Green"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'italic bold underline'))
->>>>>>> dd6dd1b4feaa5da86afbbed919da4fdd145265aa
 
 message.place(x=200, y=20)
 
