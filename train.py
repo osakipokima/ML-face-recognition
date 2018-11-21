@@ -17,20 +17,18 @@ import tkinter.ttk as ttk
 import tkinter.font as font
 
 window = tk.Tk()
-#helv36 = tk.Font(family='Helvetica', size=36, weight='bold')
 window.title("Face_Recogniser")
 
 dialog_title = 'QUIT'
 dialog_text = 'Are you sure?'
-#answer = messagebox.askquestion(dialog_title, dialog_text)
 
-#window.geometry('1280x720')
-window.configure(background='blue')
-
-#window.attributes('-fullscreen', True)
+window.configure(background='snow')
 
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
+
+
+message = tk.Label(window, text="Face-Recognition-Based-Attendance-Management-System" ,bg="Green"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'italic bold underline'))
 
 #path = "profile.jpg"
 
@@ -157,7 +155,7 @@ def TakeImages():
 def TrainImages():
     recognizer = cv2.face_LBPHFaceRecognizer.create()#recognizer = cv2.face.LBPHFaceRecognizer_create()#$cv2.createLBPHFaceRecognizer()
     harcascadePath = "haarcascade_frontalface_default.xml"
-    detector =cv2.CascadeClassifier(harcascadePath)
+    detector = cv2.CascadeClassifier(harcascadePath)
     faces,Id = getImagesAndLabels("TrainingImage")
     recognizer.train(faces, np.array(Id))
     recognizer.save("TrainingImageLabel\Trainner.yml")
@@ -186,10 +184,10 @@ def getImagesAndLabels(path):
     return faces,Ids
 
 def TrackImages():
-    recognizer = cv2.face.LBPHFaceRecognizer_create()#cv2.createLBPHFaceRecognizer()
+    recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.read("TrainingImageLabel\Trainner.yml")
     harcascadePath = "haarcascade_frontalface_default.xml"
-    faceCascade = cv2.CascadeClassifier(harcascadePath);
+    faceCascade = cv2.CascadeClassifier(harcascadePath)
     df=pd.read_csv("StudentDetails\StudentDetails.csv")
     cam = cv2.VideoCapture(0)
     font = cv2.FONT_HERSHEY_SIMPLEX
