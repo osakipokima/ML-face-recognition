@@ -153,7 +153,7 @@ def TakeImages():
             message.configure(text= res)
 
 def TrainImages():
-    recognizer = cv2.face_LBPHFaceRecognizer.create()#recognizer = cv2.face.LBPHFaceRecognizer_create()#$cv2.createLBPHFaceRecognizer()
+    recognizer = cv2.face.LBPHFaceRecognizer_create()#recognizer = cv2.face_LBPHFaceRecognizer.create()#$cv2.createLBPHFaceRecognizer()
     harcascadePath = "haarcascade_frontalface_default.xml"
     detector = cv2.CascadeClassifier(harcascadePath)
     faces,Id = getImagesAndLabels("TrainingImage")
