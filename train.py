@@ -238,16 +238,17 @@ def takeAttendance():
 def updateStatus(status):
 	message_status.configure(text=status)
 	
+def resizePadding(event):
+	print ("Width: ", event.width, "Height: ", event.height)
+	
+	
 if(time_display):print("1: \t" + str(time_dif()))
 
 # GUI stuff
 window = tk.Tk()
+
 window.title("Face Recogniser")
-
-Grid.rowconfigure(window, 0, weight=1)
-Grid.columnconfigure(window, 0, weight=1)
-
-window.configure(background='maroon')
+#window.configure(background='snow')
 
 # creating a menu instance
 menu = Menu(window)
@@ -258,61 +259,90 @@ menu.add_cascade(label="File", menu=file)
 
 # Font is a tuple of (font_family, size_in_points, style_modifier_string)
 
-# ROW 0
-title = tk.Label(window, text="Facial Recognition-Based Attendance Management System", bg="slate blue", font=('times', 30, 'italic bold underline'))
-title.grid(row=0)
+# window ROW 0
+title = tk.Label(window, text="Facial Recognition-Based Attendance Management System", bg="#7272d8", font=('times', 30, 'italic bold underline'))
+title.grid(row=0, sticky="NS", ipadx=10)
 
 
-# ROW 1
-frame_track = LabelFrame(window, text="Track")
 
-trackImg = tk.Button(frame_track, text="Track Images", command=TrackImages, bg="slate blue", activebackground = "white", font=('times', 15, ' bold '))
+# window ROW 1
+frame_mainContent = Frame(window)
+
+# frame_mainContent ROW 0
+frame_track = LabelFrame(frame_mainContent, text="Track")
+
+trackImg = tk.Button(frame_track, text="Track Faces", command=TrackImages, font=('times', 15, ' bold '))
 trackImg.pack(side="left")
 
-takeAttendance = tk.Button(frame_track, text="Take Attendance ", command=takeAttendance, bg="slate blue", activebackground = "white", font=('times', 15, ' bold '))
+takeAttendance = tk.Button(frame_track, text="Take Attendance ", command=takeAttendance, font=('times', 15, ' bold '))
 takeAttendance.pack(side="left")
 
-frame_track.grid(row=1)
+frame_track.grid(row=0)
 
+# frame_mainContent ROW 1
+frame_addUser = LabelFrame(frame_mainContent, text="Add User")
 
-# ROW 2
-frame_addUser = LabelFrame(window, text="Add User")
-
-lbl_enterID = tk.Label(frame_addUser, text="Enter ID", bg="slate blue", font=('times', 15, ' bold ') )
-lbl_enterID.grid(row=0, column=0)
-txt_enterID = tk.Entry(frame_addUser, bg="slate blue", font=('times', 15, ' bold '))
+frame_enterData = Frame(frame_addUser)
+# frame_enterData ROW 0
+lbl_enterID = tk.Label(frame_enterData, text="Enter ID", font=('times', 15, ' bold ') )
+lbl_enterID.grid(row=0, column=0, sticky="W")
+txt_enterID = tk.Entry(frame_enterData, font=('times', 15, ' bold '))
 txt_enterID.grid(row=0, column=1)
-clearButton_enterID = tk.Button(frame_addUser, text="Clear", command=clear_enterID, bg="slate blue", activebackground = "white" ,font=('times', 15, ' bold '))
+clearButton_enterID = tk.Button(frame_enterData, text="Clear", command=clear_enterID,font=('times', 15, ' bold '))
 clearButton_enterID.grid(row=0, column=2)
-takeImg = tk.Button(frame_addUser, text="Take Images", command=TakeImages, bg="slate blue", activebackground = "white" ,font=('times', 15, ' bold '))
-takeImg.grid(row=0, column=3)
-
-lbl_enterName = tk.Label(frame_addUser, text="Enter Name", bg="slate blue", font=('times', 15, ' bold '))
-lbl_enterName.grid(row=1, column=0)
-txt_enterName = tk.Entry(frame_addUser, bg="slate blue", font=('times', 15, ' bold ')  )
+# frame_enterData ROW 1
+lbl_enterName = tk.Label(frame_enterData, text="Enter Name", font=('times', 15, ' bold '))
+lbl_enterName.grid(row=1, column=0, sticky="W")
+txt_enterName = tk.Entry(frame_enterData, font=('times', 15, ' bold ')  )
 txt_enterName.grid(row=1, column=1)
-clearButton_enterName = tk.Button(frame_addUser, text="Clear", command=clear_enterName, bg="slate blue", activebackground = "white" ,font=('times', 15, ' bold '))
+clearButton_enterName = tk.Button(frame_enterData, text="Clear", command=clear_enterName, font=('times', 15, ' bold '))
 clearButton_enterName.grid(row=1, column=2)
-trainImg = tk.Button(frame_addUser, text="Train Images", command=TrainImages, bg="slate blue", activebackground = "white" ,font=('times', 15, ' bold '))
-trainImg.grid(row=1, column=3)
+frame_enterData.grid(row=0, column=0)
 
-frame_addUser.grid(row=2)
+frame_trainMachine = Frame(frame_addUser)
+# frame_trainMachine ROW 0
+takeImg = tk.Button(frame_trainMachine, text="Take Images", command=TakeImages, bg='light goldenrod', font=('times', 15, ' bold '), padx=5, pady=5)
+takeImg.grid(row=0)
+# frame_trainMachine ROW 1
+trainImg = tk.Button(frame_trainMachine, text="Train Images", command=TrainImages, bg='tomato', font=('times', 15, ' bold '), padx=5, pady=5)
+trainImg.grid(row=1)
+frame_trainMachine.grid(row=0, column=1)
 
-# ROW 3
+frame_addUser.grid(row=1)
+
+
+frame_mainContent.grid(row=1)
+# Expand mainContent to whole window
+frame_mainContent.grid(sticky="EW")
+# Center mainContent within window
+frame_mainContent.grid_rowconfigure(0, weight=1)
+frame_mainContent.grid_rowconfigure(1, weight=1)
+frame_mainContent.grid_columnconfigure(0, weight=1)
+
+
+# window ROW 2
 frame_status = Frame(window)
 
-lbl_status = tk.Label(frame_status, text="Status: ", bg="slate blue", font=('times', 15, ' bold '))
+lbl_status = tk.Label(frame_status, text="Status: ", bg="seashell3", font=('times', 15, ' bold '))
 lbl_status.pack(side="left", anchor="w")
 
-message_status = tk.Label(frame_status, text="", bg="slate blue", activebackground="yellow" ,font=('times', 15, ' bold '))
+message_status = tk.Label(frame_status, text="", bg="seashell3", font=('times', 15, ' bold '))
 message_status.pack(side="left", anchor="w", fill="x")
 
-frame_status.grid(row=3, sticky="w")
+frame_status.grid(row=2, sticky="sw")
 
+# window resize config
+window.grid_rowconfigure(0, weight=1)
+window.grid_rowconfigure(1, weight=3)
+window.grid_columnconfigure(0, weight=1)
+
+#window set min size
 window.update()
-window.minsize(window.winfo_width(), window.winfo_height())
+default_width = window.winfo_width()
+default_height = window.winfo_height()
+window.minsize(default_width, default_height)
 
-
+window.bind('<Configure>', resizePadding)
 
 if(time_display):print("2: \t" + str(time_dif()))
 window.mainloop()
