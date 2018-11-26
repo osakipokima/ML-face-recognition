@@ -16,6 +16,15 @@ import time
 import tkinter.ttk as ttk
 import tkinter.font as font
 
+def time_dif():
+    time_queue.pop()
+    time_queue.insert(0,time.time())
+    return '{:.10f}'.format(time_queue[0]-time_queue[1])
+
+time_queue = [0,0]
+time_dif()
+time_display = True
+
 window = tk.Tk()
 window.title("Face_Recogniser")
 
@@ -110,39 +119,55 @@ def is_number(s):
     return False
 
 def TakeImages():
+    if(time_display):print("3: \t" + str(time_dif()))
     Id=(txt.get())
     name=(txt2.get())
+    if(time_display):print("4: \t" + str(time_dif()))
     if(is_number(Id) and name.isalpha()):
         cam = cv2.VideoCapture(0)
+        if(time_display):print("5: \t" + str(time_dif()))
         harcascadePath = "haarcascade_frontalface_default.xml"
         detector=cv2.CascadeClassifier(harcascadePath)
+        if(time_display):print("6: \t" + str(time_dif()))
         sampleNum=0
         while(True):
             ret, img = cam.read()
+            if(time_display):print("7: \t" + str(time_dif()))
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            if(time_display):print("8: \t" + str(time_dif()))
             faces = detector.detectMultiScale(gray, 1.3, 5)
+            if(time_display):print("9: \t" + str(time_dif()))
             for (x,y,w,h) in faces:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+                if(time_display):print("10: \t" + str(time_dif()))
                 #incrementing sample number
                 sampleNum=sampleNum+1
                 #saving the captured face in the dataset folder TrainingImage
                 cv2.imwrite("TrainingImage\ "+name +"."+Id +'.'+ str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
+                if(time_display):print("11: \t" + str(time_dif()))
                 #display the frame
                 cv2.imshow('frame',img)
+                if(time_display):print("12: \t" + str(time_dif()))
             #wait for 100 miliseconds
-            if cv2.waitKey(100) & 0xFF == ord('q'):
+            if cv2.waitKey(20) & 0xFF == ord('q'):
                 break
             # break if the sample number is morethan 100
             elif sampleNum>60:
                 break
+        if(time_display):print("13: \t" + str(time_dif()))
         cam.release()
         cv2.destroyAllWindows()
+        if(time_display):print("14: \t" + str(time_dif()))
         res = "Images Saved for ID : " + Id +" Name : "+ name
         row = [Id , name]
+        if(time_display):print("15: \t" + str(time_dif()))
         with open('StudentDetails\StudentDetails.csv','a+') as csvFile:
             writer = csv.writer(csvFile)
+            if(time_display):print("16: \t" + str(time_dif()))
             writer.writerow(row)
+            if(time_display):print("17: \t" + str(time_dif()))
         csvFile.close()
+        if(time_display):print("18: \t" + str(time_dif()))
         message.configure(text= res)
     else:
         if(is_number(Id)):
@@ -154,16 +179,23 @@ def TakeImages():
 
 def TrainImages():
     recognizer = cv2.face.LBPHFaceRecognizer_create()#recognizer = cv2.face_LBPHFaceRecognizer.create()#$cv2.createLBPHFaceRecognizer()
+    if(time_display):print("19: \t" + str(time_dif()))
     harcascadePath = "haarcascade_frontalface_default.xml"
     detector = cv2.CascadeClassifier(harcascadePath)
+    if(time_display):print("20: \t" + str(time_dif()))
     faces,Id = getImagesAndLabels("TrainingImage")
+    if(time_display):print("20.5: \t" + str(time_dif()))
     recognizer.train(faces, np.array(Id))
+    if(time_display):print("21: \t" + str(time_dif()))
     recognizer.save("TrainingImageLabel\Trainner.yml")
+    if(time_display):print("21.5: \t" + str(time_dif()))
     res = "Image Trained"#+",".join(str(f) for f in Id)
     message.configure(text= res)
+    if(time_display):print("22: \t" + str(time_dif()))
 
 def getImagesAndLabels(path):
     #get the path of all the files in the folder
+    if(time_display):print("23: \t" + str(time_dif()))
     imagePaths=[os.path.join(path,f) for f in os.listdir(path)]
 
     #create empth face list
@@ -171,6 +203,7 @@ def getImagesAndLabels(path):
     #create empty ID list
     Ids=[]
     #now looping through all the image paths and loading the Ids and the images
+    if(time_display):print("24: \t" + str(time_dif()))
     for imagePath in imagePaths:
         #loading the image and converting it to gray scale
         pilImage=Image.open(imagePath).convert('L')
@@ -181,25 +214,37 @@ def getImagesAndLabels(path):
         # extract the face from the training image sample
         faces.append(imageNp)
         Ids.append(Id)
+        if(time_display):print("25: \t" + str(time_dif()))
     return faces,Ids
 
 def TrackImages():
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.read("TrainingImageLabel\Trainner.yml")
+    if(time_display):print("26: \t" + str(time_dif()))
     harcascadePath = "haarcascade_frontalface_default.xml"
+    if(time_display):print("27: \t" + str(time_dif()))
     faceCascade = cv2.CascadeClassifier(harcascadePath)
+    if(time_display):print("28: \t" + str(time_dif()))
     df=pd.read_csv("StudentDetails\StudentDetails.csv")
+    if(time_display):print("29: \t" + str(time_dif()))
     cam = cv2.VideoCapture(0)
+    if(time_display):print("30: \t" + str(time_dif()))
     font = cv2.FONT_HERSHEY_SIMPLEX
     col_names =  ['Id','Name','Date','Time']
     attendance = pd.DataFrame(columns = col_names)
+    if(time_display):print("31: \t" + str(time_dif()))
     while True:
         ret, im =cam.read()
+        if(time_display):print("32: \t" + str(time_dif()))
         gray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
+        if(time_display):print("33: \t" + str(time_dif()))
         faces=faceCascade.detectMultiScale(gray, 1.2,5)
+        if(time_display):print("34: \t" + str(time_dif()))
         for(x,y,w,h) in faces:
             cv2.rectangle(im,(x,y),(x+w,y+h),(225,0,0),2)
+            if(time_display):print("35: \t" + str(time_dif()))
             Id, conf = recognizer.predict(gray[y:y+h,x:x+w])
+            if(time_display):print("36: \t" + str(time_dif()))
             if(conf < 50):
                 ts = time.time()
                 date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
@@ -207,18 +252,24 @@ def TrackImages():
                 aa=df.loc[df['Id'] == Id]['Name'].values
                 tt=str(Id)+"-"+aa
                 attendance.loc[len(attendance)] = [Id,aa,date,timeStamp]
+                if(time_display):print("37: \t" + str(time_dif()))
 
             else:
                 Id='Unknown'
                 tt=str(Id)
+                if(time_display):print("38: \t" + str(time_dif()))
             if(conf > 75):
                 noOfFile=len(os.listdir("ImagesUnknown"))+1
                 cv2.imwrite("ImagesUnknown\Image"+str(noOfFile) + ".jpg", im[y:y+h,x:x+w])
+                if(time_display):print("39: \t" + str(time_dif()))
             cv2.putText(im,str(tt),(x,y+h), font, 1,(255,255,255),2)
         attendance=attendance.drop_duplicates(subset=['Id'],keep='first')
+        if(time_display):print("40: \t" + str(time_dif()))
         cv2.imshow('im',im)
+        if(time_display):print("41: \t" + str(time_dif()))
         if (cv2.waitKey(1)==ord('q')):
             break
+    if(time_display):print("42: \t" + str(time_dif()))
     ts = time.time()
     date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
     timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
@@ -230,8 +281,9 @@ def TrackImages():
     #print(attendance)
     res=attendance
     message2.configure(text= res)
+    if(time_display):print("43: \t" + str(time_dif()))
 
-
+if(time_display):print("1: \t" + str(time_dif()))
 clearButton = tk.Button(window, text="Clear", command=clear  ,fg="white"  ,bg="slate blue"  ,width=20  ,height=2 ,activebackground = "white" ,font=('times', 15, ' bold '))
 clearButton.place(x=950, y=200)
 clearButton2 = tk.Button(window, text="Clear", command=clear2  ,fg="white"  ,bg="slate blue"  ,width=20  ,height=2, activebackground = "white" ,font=('times', 15, ' bold '))
@@ -250,4 +302,5 @@ copyWrite.configure(state="disabled",fg="white"     )
 copyWrite.pack(side="left")
 copyWrite.place(x=800, y=750)
 
+if(time_display):print("2: \t" + str(time_dif()))
 window.mainloop()
