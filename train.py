@@ -26,17 +26,6 @@ time_queue = [0,0]
 time_dif()
 time_display = True
 
-#path = "profile.jpg"
-
-#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-#img = ImageTk.PhotoImage(Image.open(path))
-
-#The Label widget is a standard Tkinter widget used to display a text or image on the screen.
-#panel = tk.Label(window, image = img)
-
-
-# Font is a tuple of (font_family, size_in_points, style_modifier_string)
-
 
 def clear_enterID():
 	txt_enterID.delete(0, 'end')
@@ -249,7 +238,6 @@ def takeAttendance():
 def updateStatus(status):
 	message_status.configure(text=status)
 	
-
 if(time_display):print("1: \t" + str(time_dif()))
 
 # GUI stuff
@@ -267,6 +255,8 @@ window.config(menu=menu)
 file = Menu(menu)
 file.add_command(label="Exit", command=window.destroy )
 menu.add_cascade(label="File", menu=file)
+
+# Font is a tuple of (font_family, size_in_points, style_modifier_string)
 
 # ROW 0
 title = tk.Label(window, text="Facial Recognition-Based Attendance Management System", bg="slate blue", font=('times', 30, 'italic bold underline'))
