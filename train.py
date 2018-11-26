@@ -26,20 +26,6 @@ time_queue = [0,0]
 time_dif()
 time_display = True
 
-window = tk.Tk()
-window.title("Face Recogniser")
-
-window.configure(background='maroon')
-
-
-# creating a menu instance
-menu = Menu(window)
-window.config(menu=menu)
-file = Menu(menu)
-file.add_command(label="Exit", command=window.destroy )
-menu.add_cascade(label="File", menu=file)
-
-print("IUGHJKDFG")
 #path = "profile.jpg"
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -265,6 +251,19 @@ def updateStatus(status):
 	
 
 if(time_display):print("1: \t" + str(time_dif()))
+
+window = tk.Tk()
+window.title("Face Recogniser")
+
+window.configure(background='maroon')
+
+
+# creating a menu instance
+menu = Menu(window)
+window.config(menu=menu)
+file = Menu(menu)
+file.add_command(label="Exit", command=window.destroy )
+menu.add_cascade(label="File", menu=file)
 
 # ROW 0
 title = tk.Label(window, text="Facial Recognition-Based Attendance Management System", bg="slate blue", font=('times', 30, 'italic bold underline'))
