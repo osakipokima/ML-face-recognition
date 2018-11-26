@@ -245,6 +245,33 @@ def resizePadding(event):
 if(time_display):print("1: \t" + str(time_dif()))
 
 # GUI stuff
+'''
+main window{
+	title{ 
+		title frame
+	}
+	frame_mainContent{
+		frame_track{
+			trackFaces | takeAttendance
+		}
+		frame_addUser{
+			frame_enterData{
+				lbl_enterID   | txt_enterID   | clearButton_enterID
+				lbl_enterName | txt_enterName | clearButton_enterName
+			}
+			frame_trainMachine{
+			takeImg
+			trainImg
+			}
+		}
+	}
+	frame_status{
+		lbl_status | lbl_status
+	}
+	
+}
+'''
+
 window = tk.Tk()
 
 window.title("Face Recogniser")
@@ -271,13 +298,17 @@ frame_mainContent = Frame(window)
 # frame_mainContent ROW 0
 frame_track = LabelFrame(frame_mainContent, text="Track")
 
-trackImg = tk.Button(frame_track, text="Track Faces", command=TrackImages, font=('times', 15, ' bold '))
-trackImg.pack(side="left")
+trackFaces = tk.Button(frame_track, text="Track Faces", command=TrackImages, font=('times', 15, ' bold '))
+trackFaces.grid(row=0, column=0)
 
-takeAttendance = tk.Button(frame_track, text="Take Attendance ", command=takeAttendance, font=('times', 15, ' bold '))
-takeAttendance.pack(side="left")
+takeAttendance = tk.Button(frame_track, text="Take Attendance", command=takeAttendance, font=('times', 15, ' bold '))
+takeAttendance.grid(row=0, column=1)
 
-frame_track.grid(row=0)
+frame_track.grid(row=0, ipady=10, ipadx=10)
+# Center buttons in frame
+frame_track.grid_rowconfigure(0, weight=1)
+frame_track.grid_columnconfigure(0, weight=1)
+frame_track.grid_columnconfigure(1, weight=1)
 
 # frame_mainContent ROW 1
 frame_addUser = LabelFrame(frame_mainContent, text="Add User")
@@ -298,17 +329,23 @@ txt_enterName.grid(row=1, column=1)
 clearButton_enterName = tk.Button(frame_enterData, text="Clear", command=clear_enterName, font=('times', 15, ' bold '))
 clearButton_enterName.grid(row=1, column=2)
 frame_enterData.grid(row=0, column=0)
+frame_enterData.grid_rowconfigure(0, weight=1)
 
 frame_trainMachine = Frame(frame_addUser)
 # frame_trainMachine ROW 0
 takeImg = tk.Button(frame_trainMachine, text="Take Images", command=TakeImages, bg='light goldenrod', font=('times', 15, ' bold '), padx=5, pady=5)
-takeImg.grid(row=0)
+takeImg.grid(row=0, pady=(3,0))
 # frame_trainMachine ROW 1
 trainImg = tk.Button(frame_trainMachine, text="Train Images", command=TrainImages, bg='tomato', font=('times', 15, ' bold '), padx=5, pady=5)
-trainImg.grid(row=1)
-frame_trainMachine.grid(row=0, column=1)
+trainImg.grid(row=1, pady=(0,4))
+frame_trainMachine.grid(row=0, column=1, padx=(5,0))
+frame_trainMachine.grid_rowconfigure(0, weight=1)
 
-frame_addUser.grid(row=1)
+frame_addUser.grid_rowconfigure(0, weight=1)
+frame_addUser.grid_columnconfigure(0, weight=1)
+frame_addUser.grid_columnconfigure(1, weight=1)
+
+frame_addUser.grid(row=1, ipady=5, ipadx=50)
 
 
 frame_mainContent.grid(row=1)
@@ -323,10 +360,10 @@ frame_mainContent.grid_columnconfigure(0, weight=1)
 # window ROW 2
 frame_status = Frame(window)
 
-lbl_status = tk.Label(frame_status, text="Status: ", bg="seashell3", font=('times', 15, ' bold '))
+lbl_status = tk.Label(frame_status, text="Status: ", bg="#ebebeb", font=('times', 15, ' bold '))
 lbl_status.pack(side="left", anchor="w")
 
-message_status = tk.Label(frame_status, text="", bg="seashell3", font=('times', 15, ' bold '))
+message_status = tk.Label(frame_status, text="", bg="#ebebeb", font=('times', 15, ' bold '))
 message_status.pack(side="left", anchor="w", fill="x")
 
 frame_status.grid(row=2, sticky="sw")
