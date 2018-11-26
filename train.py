@@ -342,7 +342,7 @@ default_width = window.winfo_width()
 default_height = window.winfo_height()
 window.minsize(default_width, default_height)
 
-window.bind('<Configure>', resizePadding)
+#window.bind('<Configure>', resizePadding)
 
 if(time_display):print("2: \t" + str(time_dif()))
 window.mainloop()
