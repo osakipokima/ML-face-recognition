@@ -242,11 +242,11 @@ if(time_display):print("1: \t" + str(time_dif()))
 
 # GUI stuff
 window = tk.Tk()
+window.title("Face Recogniser")
 
 Grid.rowconfigure(window, 0, weight=1)
 Grid.columnconfigure(window, 0, weight=1)
 
-window.title("Face Recogniser")
 window.configure(background='maroon')
 
 # creating a menu instance
@@ -312,24 +312,7 @@ frame_status.grid(row=3, sticky="w")
 window.update()
 window.minsize(window.winfo_width(), window.winfo_height())
 
-#lbl_attendance = tk.Label(window, text="Attendance : ", bg="slate blue", font=('times', 15, ' bold '))
-#lbl_attendance.place(x=400, y=650)
 
-#message_attendance = tk.Label(window, text="", bg="slate blue", activeforeground = "green", font=('times', 15, ' bold '))
-#message_attendance.place(x=700, y=650)
-
-
-
-
-
-#quitWindow = tk.Button(window, text="Quit", command=window.destroy  ,fg="white"  ,bg="slate blue"  ,width=20  ,height=3, activebackground = "white" ,font=('times', 15, ' bold '))
-#quitWindow.place(x=1100, y=500)
-
-#copyWrite = tk.Text(window, background=window.cget("background"), borderwidth=0,font=('times', 30, 'italic bold underline'))
-#copyWrite.tag_configure("superscript", offset=10)
-#copyWrite.configure(state="disabled",fg="white"	 )
-#copyWrite.pack(side="left")
-#copyWrite.place(x=800, y=750)
 
 if(time_display):print("2: \t" + str(time_dif()))
 window.mainloop()
