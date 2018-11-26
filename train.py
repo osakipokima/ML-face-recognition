@@ -4,7 +4,7 @@ Team: Matrix:Reloaded
 """
 
 import tkinter as tk
-from tkinter import Message ,Text, Menu, LabelFrame, Frame
+from tkinter import Message ,Text, Menu, LabelFrame, Frame, Grid
 import cv2,os
 import shutil
 import csv
@@ -252,11 +252,14 @@ def updateStatus(status):
 
 if(time_display):print("1: \t" + str(time_dif()))
 
+# GUI stuff
 window = tk.Tk()
+
+Grid.rowconfigure(window, 0, weight=1)
+Grid.columnconfigure(window, 0, weight=1)
+
 window.title("Face Recogniser")
-
 window.configure(background='maroon')
-
 
 # creating a menu instance
 menu = Menu(window)
@@ -315,6 +318,9 @@ message_status = tk.Label(frame_status, text="", bg="slate blue", activebackgrou
 message_status.pack(side="left", anchor="w", fill="x")
 
 frame_status.grid(row=3, sticky="w")
+
+window.update()
+window.minsize(window.winfo_width(), window.winfo_height())
 
 #lbl_attendance = tk.Label(window, text="Attendance : ", bg="slate blue", font=('times', 15, ' bold '))
 #lbl_attendance.place(x=400, y=650)
