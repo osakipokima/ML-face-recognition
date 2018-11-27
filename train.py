@@ -28,7 +28,7 @@ def time_dif():
 time_queue = [0,0]
 time_dif()
 time_display = True
-
+if (not os.path.isdir("TrainingImage")): os.mkdir("TrainingImage")
 
 def clear_enterID():
 	""" Reset the GUI ID entry box """
