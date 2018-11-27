@@ -60,6 +60,10 @@ def is_number(s):
     return False
 
 def TakeImages():
+    """ Input validation of ID and Name in the GUI and add to csv
+        Open camera begin gathering 60 samples
+        When a face is in the view of the camera it will assign it to the ID and name in the GUI
+        Save data in gray scale label images as ID number with sample number """
 	Id=(txt_enterID.get())
 	name=(txt_enterName.get())
 	
@@ -106,7 +110,7 @@ def TakeImages():
 			#wait for 100 miliseconds
 			if cv2.waitKey(20) & 0xFF == ord('q'):
 				break
-			# break if the sample number is morethan 100
+			# break if the sample number is morethan 60
 			elif sampleNum>60:
 				break
 		if(time_display):print("13: \t" + str(time_dif()))
@@ -181,6 +185,10 @@ def getImagesAndLabels(path):
 	return faces,Ids
 
 def TrackImages():
+    """ Read the yml file containing the analyzed data 
+        Open camera to begin tracking faces
+        Apply box around detected faces and add ID and name if the face is recognized
+        When a face is recognized add an entry for it into the attendance csv """
 	recognizer = cv2.face.LBPHFaceRecognizer_create()
 	recognizer.read("TrainingImageLabel\Trainner.yml")
 	if(time_display):print("26: \t" + str(time_dif()))
@@ -286,6 +294,7 @@ main window{
 }
 '''
 
+""" GUI implementation """
 window = tk.Tk()
 
 window.title("Face Recogniser")
