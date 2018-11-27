@@ -1,10 +1,10 @@
 # ML-face-recognition
 
 Required python libraries:
-openCV (https://opencv.org/releases.html)
-numpy (https://www.scipy.org/scipylib/download.html)
-pandas (https://pandas.pydata.org/getpandas.html)
-tkinter (https://docs.python.org/3/library/tkinter.html)
+- openCV (https://opencv.org/releases.html)
+- numpy (https://www.scipy.org/scipylib/download.html)
+- pandas (https://pandas.pydata.org/getpandas.html)
+- tkinter (https://docs.python.org/3/library/tkinter.html)
 
 Run: python train.py
 
