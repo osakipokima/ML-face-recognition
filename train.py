@@ -66,7 +66,7 @@ def TakeImages():
 		Save data in gray scale label images as ID number with sample number """
 	Id=(txt_enterID.get())
 	name=(txt_enterName.get())
-	
+
 	if (Id == ""):
 		updateStatus("ID must NOT be blank")
 		return
@@ -78,9 +78,9 @@ def TakeImages():
 		return
 
 	updateStatus("Taking Images") # this status update doesnt work for some resson
-	
+
 	if(time_display):print("3: \t" + str(time_dif()))
-	
+
 	if(time_display):print("4: \t" + str(time_dif()))
 	if(is_number(Id) and name.isalpha()):
 		cam = cv2.VideoCapture(0)
@@ -102,7 +102,7 @@ def TakeImages():
 				#incrementing sample number
 				sampleNum=sampleNum+1
 				#saving the captured face in the dataset folder TrainingImage
-				cv2.imwrite("TrainingImage\ "+name +"."+Id +'.'+ str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
+				cv2.imwrite("TrainingImage/ "+name +"."+Id +'.'+ str(sampleNum) + ".jpg", gray[y:y+h,x:x+w])
 				if(time_display):print("11: \t" + str(time_dif()))
 				#display the frame
 				cv2.imshow('frame',img)
@@ -120,7 +120,7 @@ def TakeImages():
 		res = "Images Saved for ID : " + Id +" Name : "+ name
 		row = [Id , name]
 		if(time_display):print("15: \t" + str(time_dif()))
-		with open('StudentDetails\StudentDetails.csv','a+') as csvFile:
+		with open('StudentDetails/StudentDetails.csv','a+') as csvFile:
 			writer = csv.writer(csvFile)
 			if(time_display):print("16: \t" + str(time_dif()))
 			writer.writerow(row)
@@ -138,7 +138,7 @@ def TakeImages():
 
 def TrainImages():
 	""" Local Binary Pattern Haar Face Recognizer (LBPHFaceRecognizer)
-		Data given to the trainner are expected to be grayscale 
+		Data given to the trainner are expected to be grayscale
 		Faces are saved with the ID inputted in the GUI
 		The analyzed data is serialized and saved into Trainner.yml for future use """
 	recognizer = cv2.face.LBPHFaceRecognizer_create()#recognizer = cv2.face_LBPHFaceRecognizer.create()#$cv2.createLBPHFaceRecognizer()
@@ -150,7 +150,8 @@ def TrainImages():
 	if(time_display):print("20.5: \t" + str(time_dif()))
 	recognizer.train(faces, np.array(Id))
 	if(time_display):print("21: \t" + str(time_dif()))
-	recognizer.save("TrainingImageLabel\Trainner.yml")
+	if (not os.path.isdir("TrainingImageLabel")): os.mkdir("TrainingImageLabel")
+	recognizer.save("TrainingImageLabel/Trainner.yml")
 	if(time_display):print("21.5: \t" + str(time_dif()))
 	res = "Image Trained"#+",".join(str(f) for f in Id)
 	updateStatus(res)
@@ -159,7 +160,7 @@ def TrainImages():
 def getImagesAndLabels(path):
 	""" Gather the path names for all the photos saved in the trainingImage folder
 		Convert all data to grayscale for use in the Haar algorithm
-		Convert each image into a numpy array 
+		Convert each image into a numpy array
 		Crop image to only contain the detected face """
 	#get the path of all the files in the folder
 	if(time_display):print("23: \t" + str(time_dif()))
@@ -185,18 +186,18 @@ def getImagesAndLabels(path):
 	return faces,Ids
 
 def TrackImages():
-	""" Read the yml file containing the analyzed data 
+	""" Read the yml file containing the analyzed data
 		Open camera to begin tracking faces
 		Apply box around detected faces and add ID and name if the face is recognized
 		When a face is recognized add an entry for it into the attendance csv """
 	recognizer = cv2.face.LBPHFaceRecognizer_create()
-	recognizer.read("TrainingImageLabel\Trainner.yml")
+	recognizer.read("TrainingImageLabel/Trainner.yml")
 	if(time_display):print("26: \t" + str(time_dif()))
 	harcascadePath = "haarcascade_frontalface_default.xml"
 	if(time_display):print("27: \t" + str(time_dif()))
 	faceCascade = cv2.CascadeClassifier(harcascadePath)
 	if(time_display):print("28: \t" + str(time_dif()))
-	df=pd.read_csv("StudentDetails\StudentDetails.csv")
+	df=pd.read_csv("StudentDetails/StudentDetails.csv")
 	if(time_display):print("29: \t" + str(time_dif()))
 	cam = cv2.VideoCapture(0)
 	if(time_display):print("30: \t" + str(time_dif()))
@@ -230,8 +231,9 @@ def TrackImages():
 				tt=str(Id)
 				if(time_display):print("38: \t" + str(time_dif()))
 			if(conf > 75):
+				if (not os.path.isdir("ImagesUnknown")): os.mkdir("ImagesUnknown")
 				noOfFile=len(os.listdir("ImagesUnknown"))+1
-				cv2.imwrite("ImagesUnknown\Image"+str(noOfFile) + ".jpg", im[y:y+h,x:x+w])
+				cv2.imwrite("ImagesUnknown/Image"+str(noOfFile) + ".jpg", im[y:y+h,x:x+w])
 				if(time_display):print("39: \t" + str(time_dif()))
 			cv2.putText(im,str(tt),(x,y+h), font, 1,(255,255,255),2)
 		attendance=attendance.drop_duplicates(subset=['Id'],keep='first')
@@ -245,7 +247,7 @@ def TrackImages():
 	date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
 	timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
 	Hour,Minute,Second=timeStamp.split(":")
-	fileName="Attendance\Attendance_"+date+"_"+Hour+"-"+Minute+"-"+Second+".csv"
+	fileName="Attendance/Attendance_"+date+"_"+Hour+"-"+Minute+"-"+Second+".csv"
 	attendance.to_csv(fileName,index=False)
 	cam.release()
 	cv2.destroyAllWindows()
@@ -256,20 +258,20 @@ def TrackImages():
 
 def takeAttendance():
 	print("TODO")
-	
+
 def updateStatus(status):
 	message_status.configure(text=status)
-	
+
 def resizePadding(event):
 	print ("Width: ", event.width, "Height: ", event.height)
-	
-	
+
+
 if(time_display):print("1: \t" + str(time_dif()))
 
 # GUI stuff
 '''
 main window{
-	title{ 
+	title{
 		title frame
 	}
 	frame_mainContent{
@@ -290,7 +292,7 @@ main window{
 	frame_status{
 		lbl_status | lbl_status
 	}
-	
+
 }
 '''
 
