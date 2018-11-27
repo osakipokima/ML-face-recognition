@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Team: Matrix:Reloaded
+
+Attendance: Applied Facial Recognition
 """
 
 import tkinter as tk
@@ -17,9 +19,10 @@ import tkinter.ttk as ttk
 import tkinter.font as font
 
 def time_dif():
-	time_queue.pop()
-	time_queue.insert(0,time.time())
-	return '{:.10f}'.format(time_queue[0]-time_queue[1])
+    """ Computes time difference. Primarly for optimization """
+    time_queue.pop()
+    time_queue.insert(0,time.time())
+    return '{:.10f}'.format(time_queue[0]-time_queue[1])
 
 
 time_queue = [0,0]
@@ -28,30 +31,33 @@ time_display = True
 
 
 def clear_enterID():
-	txt_enterID.delete(0, 'end')
-	res = ""
-	updateStatus(res)
+    """ Reset the GUI ID entry box """
+    txt_enterID.delete(0, 'end')
+    res = ""
+    updateStatus(res)
 
 def clear_enterName():
-	txt_enterName.delete(0, 'end')
-	res = ""
-	updateStatus(res)
+    """ Reset the GUI name entry box """
+    txt_enterName.delete(0, 'end')
+    res = ""
+    updateStatus(res)
 
 def is_number(s):
-	try:
-		float(s)
-		return True
-	except ValueError:
-		pass
+    """ Number validation check """
+    try:
+	    float(s)
+	    return True
+    except ValueError:
+	    pass
 
-	try:
-		import unicodedata
-		unicodedata.numeric(s)
-		return True
-	except (TypeError, ValueError):
-		pass
+    try:
+    	import unicodedata
+    	unicodedata.numeric(s)
+    	return True
+    except (TypeError, ValueError):
+    	pass
 
-	return False
+    return False
 
 def TakeImages():
 	Id=(txt_enterID.get())
@@ -127,6 +133,10 @@ def TakeImages():
 			updateStatus(res)
 
 def TrainImages():
+    """ Local Binary Pattern Haar Face Recognizer (LBPHFaceRecognizer)
+        Data given to the trainner are expected to be grayscale 
+        Faces are saved with the ID inputted in the GUI
+        The analyzed data is serialized and saved into Trainner.yml for future use """
 	recognizer = cv2.face.LBPHFaceRecognizer_create()#recognizer = cv2.face_LBPHFaceRecognizer.create()#$cv2.createLBPHFaceRecognizer()
 	if(time_display):print("19: \t" + str(time_dif()))
 	harcascadePath = "haarcascade_frontalface_default.xml"
@@ -143,11 +153,15 @@ def TrainImages():
 	if(time_display):print("22: \t" + str(time_dif()))
 
 def getImagesAndLabels(path):
+    """ Gather the path names for all the photos saved in the trainingImage folder
+        Convert all data to grayscale for use in the Haar algorithm
+        Convert each image into a numpy array 
+        Crop image to only contain the detected face """
 	#get the path of all the files in the folder
 	if(time_display):print("23: \t" + str(time_dif()))
 	imagePaths=[os.path.join(path,f) for f in os.listdir(path)]
 
-	#create empth face list
+	#create empty face list
 	faces=[]
 	#create empty ID list
 	Ids=[]
