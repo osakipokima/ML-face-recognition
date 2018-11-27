@@ -27,8 +27,9 @@ def time_dif():
 
 time_queue = [0,0]
 time_dif()
-time_display = True
+time_display = False
 if (not os.path.isdir("TrainingImage")): os.mkdir("TrainingImage")
+if (not os.path.isdir("Attendance")): os.mkdir("Attendance")
 
 def clear_enterID():
 	""" Reset the GUI ID entry box """
@@ -253,7 +254,7 @@ def TrackImages():
 	cv2.destroyAllWindows()
 	#print(attendance)
 	res=attendance
-	message_attendance.configure(text= res)
+	message_status.configure(text= res)
 	if(time_display):print("43: \t" + str(time_dif()))
 
 def takeAttendance():
